@@ -22,6 +22,7 @@ const Login = () => {
 
         const response = await fetch(`http://localhost:5001/users?email=${formData.email}&password=${formData.password}`, { method: "GET" });
         const users = await response.json();
+        console.log(users);
         if (users.length > 0) {
             localStorage.setItem("todouser", JSON.stringify(users[0]));
             alert("user logged in");
