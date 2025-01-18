@@ -14,7 +14,6 @@ const Home = () => {
                 </div>
 
                 <div className="col-lg-6 d-flex flex-column justify-content-center align-items-center h-100">
-
                     <div className='card w-50 rounded-0'>
                         <div className='card-header d-flex bg-transparent p-0 border-0'>
                             <Link className='w-50 py-2 text-center text-decoration-none fw-bold bg-primary text-white' to="/login">Login</Link>

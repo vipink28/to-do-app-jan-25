@@ -7,10 +7,16 @@
       "id": 1
     },
     {
-      "name": "Vipin",
-      "email": "vipin@gmail.com",
+      "name": "Aman",
+      "email": "aman@gmail.com",
       "password": "admin",
       "id": 2
+    },
+    {
+      "name": "Simran",
+      "email": "simran@gmail.com",
+      "password": "admin",
+      "id": 3
     }
   ],
   "tasks": []

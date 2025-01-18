@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
 
     const [formData, setFormData] = useState(null);
+    const navigate = useNavigate();
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({
@@ -19,8 +21,23 @@ const Register = () => {
             },
             body: JSON.stringify(formData)
         }
-        const response = await fetch("http://localhost:5001/users", config);
-        console.log(response);
+
+        const checkExisitingUser = await fetch(`http://localhost:5001/users?email=${formData.email}`);
+        const user = await checkExisitingUser.json();
+        if (user.length > 0) {
+            alert("User already exist");
+        } else {
+            const response = await fetch("http://localhost:5001/users", config);
+            if (response.status === 201) {
+                const user = await response.json();
+                console.log(user);
+                localStorage.setItem("todouser", JSON.stringify(user))
+                alert("User registered successfully");
+                navigate("/task-list");
+            } else {
+                alert("Something went wrong");
+            }
+        }
     }
 
     return (
