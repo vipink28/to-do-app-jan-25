@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AuthContext from './AuthContext';
 
 const Login = () => {
+    const { loginUser } = useContext(AuthContext);
     const [formData, setFormData] = useState(null);
     // useNavigate hook is used to add redirection in a function.
     const navigate = useNavigate();
@@ -13,24 +15,10 @@ const Login = () => {
         }))
     }
 
-    const formSubmit = async () => {
-        // get all fields from table
-        //const response = await fetch("http://localhost:5001/users", { method: "GET" });
-        //const users = await response.json()
-
-        //login code
-
-        const response = await fetch(`http://localhost:5001/users?email=${formData.email}&password=${formData.password}`, { method: "GET" });
-        const users = await response.json();
-        console.log(users);
-        if (users.length > 0) {
-            localStorage.setItem("todouser", JSON.stringify(users[0]));
-            alert("user logged in");
-            navigate("/task-list");
-        } else {
-            alert("Email/Password incorrect");
-        }
+    const formSubmit = () => {
+        loginUser(formData);
     }
+
     return (
         <div className='py-2'>
             <div className='mb-3'>
