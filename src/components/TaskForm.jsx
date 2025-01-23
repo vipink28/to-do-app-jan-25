@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import AuthContext from '../auth/AuthContext';
+import TaskContext from '../context/TaskContext';
 
 const TaskForm = () => {
+    const { addTask } = useContext(TaskContext);
+    const { user } = useContext(AuthContext);
     const [formData, setFormData] = useState(null);
 
     const handleChange = (e) => {
         let { value, name } = e.target;
         setFormData((prev) => ({
             ...prev,
-            [name]: value
+            [name]: value,
+            userid: user.id,
+            modifiedon: Date()
         }))
+    }
+
+    const formSubmit = () => {
+        addTask(formData);
     }
     return (
         <div className='p-2'>
@@ -26,8 +36,7 @@ const TaskForm = () => {
                     <label className='form-label'>Due Date</label>
                     <input type='datetime-local' name='duedate' className='form-control' onChange={handleChange} />
                 </div>
-                <button className='btn btn-primary'>Add Task</button>
-
+                <button onClick={formSubmit} className='btn btn-primary'>Add Task</button>
             </div>
         </div>
     )
