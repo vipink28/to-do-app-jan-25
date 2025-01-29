@@ -23,11 +23,35 @@ export const TaskProvider = ({ children }) => {
             const response = await fetch(`http://localhost:5001/tasks`, config);
             if (response.status === 201) {
                 alert("Task added successfuly");
+                getAllTasks(user.id);
             }
         } catch (error) {
             console.log(error);
         }
     }
+
+    //update task
+    const updateTask = async (formData) => {
+        const config = {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData)
+        }
+
+        try {
+            const response = await fetch(`http://localhost:5001/tasks/${formData.id}`, config);
+            if (response.status === 200) {
+                alert("Task updated successfuly");
+                getAllTasks(user.id);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
 
     //get tasks
     const getAllTasks = async (userid) => {
@@ -53,7 +77,11 @@ export const TaskProvider = ({ children }) => {
 
     return (
         <TaskContext.Provider value={{
-            addTask
+            addTask,
+            recentTasks,
+            allTasks,
+            latestTask,
+            updateTask
         }}>
             {children}
         </TaskContext.Provider>
