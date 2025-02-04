@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import AuthContext from '../auth/AuthContext';
 import TaskContext from '../context/TaskContext';
 
-const TaskForm = ({ isUpdate, data, setIsUpdate }) => {
+const TaskForm = ({ isUpdate, data, setIsUpdate, isPopup, closeBtn }) => {
     const init = {
         title: "",
         description: "",
@@ -14,10 +14,10 @@ const TaskForm = ({ isUpdate, data, setIsUpdate }) => {
     const [formData, setFormData] = useState(init);
 
     useEffect(() => {
-        if (isUpdate) {
+        if (isUpdate && data) {
             setFormData(data)
         }
-    }, [isUpdate])
+    }, [isUpdate, data])
 
 
     const handleChange = (e) => {
@@ -39,7 +39,11 @@ const TaskForm = ({ isUpdate, data, setIsUpdate }) => {
     }
 
     const formCancel = () => {
-        setIsUpdate(false);
+        if (isPopup) {
+            closeBtn.current.click();
+        } else {
+            setIsUpdate(false);
+        }
         setFormData(init);
     }
 
